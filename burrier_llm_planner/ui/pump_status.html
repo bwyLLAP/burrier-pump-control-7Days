@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+*{box-sizing:border-box}body{margin:0;color:#17313a;background:white;font:13px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums}.status{border:1px solid #d9e3e7;border-radius:8px;padding:13px 16px}.head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:12px}.head b{font-size:14px}.hint,small{color:#536974;font-size:11px}#clock{white-space:nowrap}.grid{display:grid;grid-template-columns:1fr 1.25fr 1.25fr;gap:22px}.pump{display:flex;gap:13px;align-items:center}.machine{width:76px;height:76px;flex:none;color:#81939d}#impeller{transform-origin:58px 55px}.running .machine{color:#187682}.running #impeller{animation:rotate 1.8s linear infinite}.flow{opacity:0}.running .flow{opacity:1;stroke-dasharray:6 8;animation:flow 1s linear infinite}.state{font-weight:650;font-size:22px;margin:2px 0}.running .state{color:#187682}.label{color:#536974;font-size:11px;margin-bottom:4px}.time{font-size:21px;font-weight:600;line-height:1.25;white-space:nowrap}.details{font-size:11px;color:#536974;margin-top:7px;min-height:30px}.next-state{font-size:15px;font-weight:650}.footer{margin-top:10px;border-top:1px solid #e5ecee;padding-top:7px;display:flex;justify-content:space-between;gap:10px;color:#536974;font-size:10px}.next-row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.tag{font-size:11px;background:#edf5f5;color:#17606b;padding:2px 7px;border-radius:3px}p{margin:0}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@keyframes rotate{to{transform:rotate(360deg)}}@keyframes flow{to{stroke-dashoffset:-28}}@media(prefers-reduced-motion:reduce){#impeller,.flow{animation:none!important}}@media(max-width:620px){.status{padding:10px 12px}.head{margin-bottom:9px}.hint{display:none}.grid{grid-template-columns:1fr 1fr;gap:12px}.pump{grid-column:1/-1;gap:10px}.machine{width:43px;height:43px}.state{font-size:19px}.time{font-size:18px}.details{margin-top:4px;min-height:28px}.footer{margin-top:7px}.label{font-size:10px}.next-state{font-size:13px}.footer span:last-child{display:none}.next-row{gap:4px}.tag{padding:1px 4px}}
+@media(max-width:620px){body{font-size:12px}.status{padding:8px 10px}.head{margin-bottom:7px}.grid{gap:9px}.details{font-size:10px;line-height:1.25;min-height:25px}.footer{margin-top:5px;padding-top:5px}small{font-size:10px}#source{display:block;max-width:250px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}}
+.panel{min-height:388px;padding:18px 22px;display:flex;flex-direction:column}.panel .head{margin-bottom:14px}.panel .head b{font-size:16px}.panel .grid{grid-template-columns:1fr 1fr;gap:25px;flex:1;align-content:start}.panel .pump{grid-column:1/-1;padding:6px 0 19px;border-bottom:1px solid #e5ecee;gap:22px}.panel .machine{width:104px;height:104px}.panel .state{font-size:30px}.panel .time{font-size:29px}.panel .label{font-size:12px}.panel .details{font-size:12px;min-height:34px}.panel .footer{margin-top:20px}.panel small{font-size:11px}
+@media(max-width:620px){.panel{padding:14px;min-height:388px}.panel .grid{gap:20px}.panel .pump{gap:16px;padding-bottom:16px}.panel .machine{width:82px;height:82px}.panel .state{font-size:26px}.panel .time{font-size:23px}.panel .details{font-size:11px}.panel .label{font-size:11px}}
+.state{display:table;border-radius:6px;padding:3px 12px;margin:5px 0 7px;background:#edf1f3;color:#536974}.state.is-on,.tag.is-on{background:#d9f3e3;color:#176335;border:1px solid #94cdaa}.state.is-off,.tag.is-off{background:#fce0e0;color:#a52229;border:1px solid #e9a6aa}.tag{font-weight:700;min-width:42px;text-align:center}.running .state{color:#176335}
+</style></head><body><section class="status" aria-label="Scheduled pump status">
+<div class="head"><b>Scheduled pump status</b><small id="clock"></small></div>
+<div class="grid"><div id="pump" class="pump"><svg class="machine" viewBox="0 0 120 110" aria-hidden="true"><path d="M2 65H30M85 42H117" fill="none" stroke="currentColor" stroke-width="12"/><path d="M40 86L34 100H82L76 86" fill="#e7edef" stroke="currentColor" stroke-width="3"/><circle cx="58" cy="55" r="33" fill="#f1f6f7" stroke="currentColor" stroke-width="5"/><g id="impeller" fill="currentColor"><path d="M58 53Q35 22 51 27Q67 26 60 52M60 55Q91 32 86 48Q87 64 61 57M58 58Q81 89 65 84Q49 85 56 59M55 55Q24 78 29 62Q28 46 54 53"/><circle cx="58" cy="55" r="6"/></g><path class="flow" d="M1 65H24M94 42H120" fill="none" stroke="#1e98a6" stroke-width="3"/></svg><div><div class="label">According to the active schedule</div><div id="state" class="state">No schedule</div><small id="source">Load prices and generate a plan</small></div></div>
+<div><div id="elapsed-label" class="label">Current window · elapsed</div><div id="elapsed" class="time">—</div><div id="current-meta" class="details">No current schedule coverage</div><small id="current-range"></small></div>
+<div><div class="next-row"><div class="label">Next window</div><span id="next-state" class="tag">—</span></div><div id="next-duration" class="time">—</div><div id="next-meta" class="details">No next window available</div><small id="next-range"></small></div></div>
+<div class="footer"><span>Schedule indication only · no SCADA connection</span><span>Clock updates every second · Australia/Sydney</span></div>
+<p id="announce" class="sr" role="status" aria-live="polite"></p></section>
+<script id="windows" type="application/json">__WINDOWS__</script><script>
+'use strict';
+const windows=JSON.parse(document.getElementById('windows').textContent),$=id=>document.getElementById(id);
+const fmt=new Intl.DateTimeFormat('en-AU',{timeZone:'Australia/Sydney',weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',hour12:false});
+const clockFmt=new Intl.DateTimeFormat('en-AU',{timeZone:'Australia/Sydney',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+function duration(ms){const s=Math.max(0,Math.floor(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60);return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function label(w){return !w||w.on===null?'Unknown':w.on?'ON':'OFF';}
+let lastState='';
+function update(now=Date.now()){
+ let index=windows.findIndex(w=>w.start<=now&&now<w.end),current=index>=0?windows[index]:null;
+ let next=index>=0?windows[index+1]:windows.find(w=>w.start>now);
+ const known=current&&current.on!==null;
+ $('clock').textContent=clockFmt.format(now)+' Sydney';
+ $('pump').classList.toggle('running',!!known&&current.on);
+ $('state').textContent=known?'Pump '+label(current):'No schedule';
+ for(const [id,window] of [['state',current],['next-state',next]]){
+  $(id).classList.toggle('is-on',!!window&&window.on===true);
+  $(id).classList.toggle('is-off',!!window&&window.on===false);
+ }
+ $('source').textContent=known?current.source:'Current time outside loaded plan';
+ $('elapsed-label').textContent=current?.startClipped?'Current window · elapsed in loaded plan':'Current window · elapsed';
+ $('elapsed').textContent=known?duration(now-current.start):'—';
+ $('current-meta').textContent=known?(current.startClipped||current.endClipped?'Known duration ':'Total ')+duration(current.end-current.start)+' · '+(current.endClipped?'coverage ends in ':'remaining ')+duration(current.end-now):'No current schedule coverage';
+ $('current-range').textContent=known?fmt.format(current.start)+' → '+fmt.format(current.end):'';
+ $('next-state').textContent=label(next);
+ $('next-duration').textContent=next&&next.on!==null?duration(next.end-next.start):'—';
+ $('next-meta').textContent=next&&next.on!==null?(next.startClipped?'Plan available in ':'Starts in ')+duration(next.start-now)+(next.endClipped?' · to end of loaded plan':''):'No next window in loaded plan';
+ $('next-range').textContent=next&&next.on!==null?fmt.format(next.start)+' → '+fmt.format(next.end):'';
+ const state=label(current);if(state!==lastState){$('announce').textContent=known?'Scheduled pump state '+state:'No schedule at the current time';lastState=state;}
+}
+update();setInterval(()=>update(),1000);
+</script></body></html>
